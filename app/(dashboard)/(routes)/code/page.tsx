@@ -10,20 +10,21 @@ import { UserAvatar } from "@/components/user-avatar";
 import { BotAvatar } from "@/components/bot-avatar";
 
 import * as z from "zod";
-import { MessageSquare } from "lucide-react";
+import { Code } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CodeBlock } from "@/components/CodeBlock";
 
 interface ChatMessage {
       role: "user" | "model";
       parts: { text: string }[];
 }
 
-const ConversationPage = () => {
+const CodePage = () => {
       const router = useRouter();
       const [messages, setMessages] = useState<ChatMessage[]>([]);
 
@@ -45,7 +46,7 @@ const ConversationPage = () => {
 
                   const updatedMessages = [...messages, userMessage];
 
-                  const response = await axios.post("/api/conversation", {
+                  const response = await axios.post("/api/code", {
                         messages: updatedMessages,
                   });
 
@@ -84,11 +85,11 @@ const ConversationPage = () => {
       return (
             <div>
                   <Heading
-                        title="Conversation"
-                        description="Our most advanced conversation model"
-                        icon={MessageSquare}
-                        iconColor="text-violet-500"
-                        bgColor="bg-violet-500/10"
+                        title="Code Generation"
+                        description="Generate code using descriptive text."
+                        icon={Code}
+                        iconColor="text-green-700"
+                        bgColor="bg-green-700/10"
                   />
 
                   <div className="px-4 lg:px-8">
@@ -105,7 +106,7 @@ const ConversationPage = () => {
                                                       <FormItem className="col-span-12 lg:col-span-10">
                                                             <FormControl className="m-0 p-0">
                                                                   <Input
-                                                                        placeholder="How do I calculate the radius of a circle?"
+                                                                        placeholder="Simple toogle buttons using react hooks."
                                                                         {...field}
                                                                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                                                                         disabled={
@@ -139,7 +140,7 @@ const ConversationPage = () => {
                                     {messages.map((message, index) => (
                                           <div
                                                 key={index}
-                                                className={`p-8 w-full flex items-start gap-x-8 rounded-lg ${
+                                                className={`p-4 w-full flex items-start gap-x-4 rounded-lg ${
                                                       message.role === "user"
                                                             ? "bg-white border border-black/10"
                                                             : "bg-muted"
@@ -150,15 +151,26 @@ const ConversationPage = () => {
                                                 ) : (
                                                       <BotAvatar />
                                                 )}
-                                                <pre className="text-sm whitespace-pre-wrap font-mono">
-                                                      <p>
-                                                            {
-                                                                  message
-                                                                        .parts[0]
-                                                                        .text
-                                                            }
-                                                      </p>
-                                                </pre>
+                                                <div className="flex-1">
+                                                      {message.role ===
+                                                      "user" ? (
+                                                            <p className="text-sm">
+                                                                  {
+                                                                        message
+                                                                              .parts[0]
+                                                                              .text
+                                                                  }
+                                                            </p>
+                                                      ) : (
+                                                            <CodeBlock
+                                                                  code={
+                                                                        message
+                                                                              .parts[0]
+                                                                              .text
+                                                                  }
+                                                            />
+                                                      )}
+                                                </div>
                                           </div>
                                     ))}
                               </div>
@@ -168,4 +180,4 @@ const ConversationPage = () => {
       );
 };
 
-export default ConversationPage;
+export default CodePage;
