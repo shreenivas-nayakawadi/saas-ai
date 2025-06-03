@@ -1,47 +1,40 @@
 "use client";
 
-import { useState } from "react";
 import { Check, Copy } from "lucide-react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 interface CodeBlockProps {
   code: string;
 }
 
 export const CodeBlock = ({ code }: CodeBlockProps) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <div className="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-700 mt-4">
       {/* Copy Button */}
       <div className="absolute top-2 right-2 z-10">
-        <CopyToClipboard text={code} onCopy={handleCopy}>
-          <button
-            className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs transition-all ${
-              copied
-                ? "bg-green-600/20 text-green-400"
-                : "bg-gray-700/80 text-gray-300 hover:bg-gray-600/80"
-            }`}
-            title={copied ? "Copied!" : "Copy to clipboard"}
-          >
-            {copied ? (
-              <>
-                <Check size={16} className="text-green-400" />
-                <span className="hidden sm:inline">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy size={16} />
-                <span className="hidden sm:inline">Copy</span>
-              </>
-            )}
-          </button>
-        </CopyToClipboard>
+        <button
+          onClick={() => copy(code)}
+          className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs transition-all ${
+            copied
+              ? "bg-green-600/20 text-green-400"
+              : "bg-gray-700/80 text-gray-300 hover:bg-gray-600/80"
+          }`}
+          title={copied ? "Copied!" : "Copy to clipboard"}
+        >
+          {copied ? (
+            <>
+              <Check size={16} className="text-green-400" />
+              <span className="hidden sm:inline">Copied</span>
+            </>
+          ) : (
+            <>
+              <Copy size={16} />
+              <span className="hidden sm:inline">Copy</span>
+            </>
+          )}
+        </button>
       </div>
 
       {/* Code Block */}
