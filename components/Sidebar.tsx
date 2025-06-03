@@ -3,12 +3,9 @@
 import { cn } from "@/lib/utils";
 import {
       Code,
-      ImageIcon,
       LayoutDashboard,
       MessageSquare,
-      Music,
-      Settings,
-      VideoIcon,
+
 } from "lucide-react";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
@@ -30,34 +27,12 @@ const routes = [
             icon: MessageSquare,
             color: "text-violet-500",
       },
-      {
-            label: "Image Generation",
-            href: "/image",
-            icon: ImageIcon,
-            color: "text-pink-500",
-      },
-      {
-            label: "Video Generation",
-            href: "/video",
-            icon: VideoIcon,
-            color: "text-orange-500",
-      },
-      {
-            label: "Music Generation",
-            href: "/music",
-            icon: Music,
-            color: "text-emerald-500",
-      },
+
       {
             label: "Code Generation",
             href: "/code",
             icon: Code,
             color: "text-green-700",
-      },
-      {
-            label: "Settings",
-            href: "/settings",
-            icon: Settings,
       },
 ];
 
@@ -87,7 +62,12 @@ const Sidebar = () => {
                                     <Link
                                           key={route.href}
                                           href={route.href}
-                                          className={cn("text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition", pathname === route.href ? "text-white bg-white/10 " : "text-zinc-400")}
+                                          className={cn(
+                                                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                                                pathname === route.href
+                                                      ? "text-white bg-white/10 "
+                                                      : "text-zinc-400"
+                                          )}
                                     >
                                           <div className="flex items-center flex-1">
                                                 <route.icon

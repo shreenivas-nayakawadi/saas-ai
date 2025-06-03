@@ -23,6 +23,14 @@ interface ChatMessage {
       parts: { text: string }[];
 }
 
+interface ApiError extends Error {
+      response?: {
+            data?: {
+                  error?: string;
+            };
+      };
+}
+
 const ConversationPage = () => {
       const router = useRouter();
       const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -56,18 +64,19 @@ const ConversationPage = () => {
 
                   setMessages((prev) => [...prev, userMessage, modelMessage]);
                   form.reset();
-            } catch (error: any) {
+            } catch (error: unknown) {
                   console.error("Chat error:", error);
+                  const apiError = error as ApiError;
 
                   // Display error message to user
                   if (
-                        error.response?.data?.error === "Invalid Google API key"
+                        apiError.response?.data?.error === "Invalid Google API key"
                   ) {
                         alert(
                               "The API key is invalid. Please check your configuration."
                         );
                   } else if (
-                        error.response?.data?.error ===
+                        apiError.response?.data?.error ===
                         "Google API key not configured"
                   ) {
                         alert(

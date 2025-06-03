@@ -3,14 +3,7 @@
 import { Card } from "@/components/ui/card";
 
 import { cn } from "@/lib/utils";
-import {
-      ArrowRight,
-      Code,
-      ImageIcon,
-      MessageSquare,
-      Music,
-      VideoIcon,
-} from "lucide-react";
+import { ArrowRight, Code, MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const tools = [
@@ -21,27 +14,7 @@ const tools = [
             color: "text-violet-500",
             bgColor: "bg-violet-500/10",
       },
-      {
-            label: "Image Generation",
-            href: "/image",
-            icon: ImageIcon,
-            color: "text-pink-500",
-            bgColor: "bg-pink-500/10",
-      },
-      {
-            label: "Video Generation",
-            href: "/video",
-            icon: VideoIcon,
-            color: "text-orange-500",
-            bgColor: "bg-orange-500/10",
-      },
-      {
-            label: "Music Generation",
-            href: "/music",
-            icon: Music,
-            color: "text-emerald-500",
-            bgColor: "bg-emerald-500/10",
-      },
+
       {
             label: "Code Generation",
             href: "/code",
