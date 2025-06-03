@@ -13,6 +13,7 @@
     "@clerk/nextjs": "^6.20.2",
     "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.0.1",
+    "@prisma/client": "^5.10.2",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
